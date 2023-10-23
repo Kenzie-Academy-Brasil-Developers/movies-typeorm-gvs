@@ -6,5 +6,5 @@ import { movieRoutes } from "./routes/movie.routes"
 //import {handdleErrors} from "./middlewares/handdleErrors.middlewares
 export const app : Application = express()
 app.use(json())
-app.use('/', movieRoutes)
+app.use('/movies', movieRoutes)
 app.use(handdleErrors)

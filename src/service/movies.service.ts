@@ -10,19 +10,20 @@ export const createMovieService = async (data: Omit<Movie, 'id'>):Promise<Movie>
     return newMovie;
 }
 
-export const readMovieServcie = async (data: Omit<Movie, 'id'>):Promise<Movie[]>=>{
+export const readMovieService = async ():Promise<Movie[]>=>{
     const repo: Repository<Movie> = AppDataSource.getRepository(Movie)
     const movies : Movie[] = await repo.find()
     return movies
 }
 
-export const deleteMovie = async (movieId : number): Promise<void> => {
+export const updateMovieService = async (movie: Movie, data: Partial<Movie>):Promise<Movie>=>{
+    const repo: Repository<Movie> = AppDataSource.getRepository(Movie)
+    return await repo.save({...movie, ...data})
+}
+
+export const deleteMovieService = async (movie: Movie): Promise<void> => {
     const repo : Repository<Movie> = AppDataSource.getRepository(Movie)
-    const movie : Movie | null = await repo.findOne({where: {id: movieId}})
     
-    if(!movie){
-        throw new AppError('Movie not found',404)
-    }
     await repo.remove(movie)
     
     
