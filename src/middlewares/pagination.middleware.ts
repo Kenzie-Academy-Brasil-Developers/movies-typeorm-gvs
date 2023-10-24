@@ -14,7 +14,10 @@ export const pagination = (req: Request, res: Response , next: NextFunction) : v
     const nextPage : string = `${baseUrl}?page=${page + 1}&perPage=${perPage}`
 
     const pagination= {
-        page, perPage, prevPage, nextPage
+        page: perPage * (page - 1),
+        perPage, 
+        prevPage, 
+        nextPage
     }
     res.locals = {...res.locals, pagination}
 
