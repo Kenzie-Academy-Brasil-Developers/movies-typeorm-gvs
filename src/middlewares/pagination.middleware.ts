@@ -13,8 +13,8 @@ export const pagination = (req: Request, res: Response , next: NextFunction) : v
     const prevPage : string = `${baseUrl}?page=${page - 1}&perPage=${perPage}`
     const nextPage : string = `${baseUrl}?page=${page + 1}&perPage=${perPage}`
 
-    const queryOrder : any = req.params.order
-    const querySort : any = req.params.sort
+    const queryOrder : any = req.query.order
+    const querySort : any = req.query.sort
 
 
     const orderOpts : Array<string> = ['asc', 'desc']
@@ -39,6 +39,8 @@ export const pagination = (req: Request, res: Response , next: NextFunction) : v
     const pagination= {
         page: perPage * (page - 1),
         perPage, 
+        order,
+        sort,
         prevPage, 
         nextPage
     }
