@@ -1,4 +1,5 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response, query } from "express";
+import { PaginationParams } from "../interfaces/pagination.interface";
 
 export const pagination = (req: Request, res: Response , next: NextFunction) : void=> {
     const queryPage : number = Number(req.query.page)
@@ -12,8 +13,36 @@ export const pagination = (req: Request, res: Response , next: NextFunction) : v
     const prevPage : string = `${baseUrl}?page=${page - 1}&perPage=${perPage}`
     const nextPage : string = `${baseUrl}?page=${page + 1}&perPage=${perPage}`
 
-    const pagination = {
-        page, perPage, prevPage, nextPage
+    const queryOrder : any = req.query.order
+    const querySort : any = req.query.sort
+
+
+    const orderOpts : Array<string> = ['asc', 'desc']
+    const sortOpts : Array<string> = ['price']
+
+    let order : string =''
+    let sort : string = ''
+
+    if(!(querySort && sortOpts.includes(querySort))){
+        sort = 'id'
+    }else{
+        sort = querySort
+    }
+
+    if(!queryOrder || (queryOrder && orderOpts.includes(queryOrder))){
+        order = 'asc'
+    }else{
+        order = queryOrder
+    }
+
+
+    const pagination= {
+        page: perPage * (page - 1),
+        perPage, 
+        order,
+        sort,
+        prevPage, 
+        nextPage
     }
     res.locals = {...res.locals, pagination}
 
