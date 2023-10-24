@@ -3,10 +3,11 @@ import { createMovieController, deleteMovieController, readMovieController, upda
 import { verifyIdExist } from "../middlewares/verifyIdExist.middleware";
 import { validateBody } from "../middlewares/validateBody.middleware";
 import { movieCreateSchema } from "../schemas/movies.schemas";
+import { pagination } from "../middlewares/pagination.middleware";
 
 export const movieRoutes : Router = Router();
 movieRoutes.use('/:id', verifyIdExist)
 movieRoutes.post('/', validateBody(movieCreateSchema),createMovieController)
-movieRoutes.get('/', readMovieController)
+movieRoutes.get('/', pagination ,readMovieController)
 movieRoutes.patch('/:id', updateMovieController)
 movieRoutes.delete('/id', deleteMovieController) 

@@ -8,7 +8,7 @@ export const createMovieController = async (req: Request, res: Response):Promise
 }
 
 export const readMovieController = async (req: Request, res: Response):Promise<Response>=>{
-    const movies : Movie[] = await readMovieService()
+    const movies : Movie[] = await readMovieService(res.locals.pagination)
     return res.status(200).json(movies)
 }
 

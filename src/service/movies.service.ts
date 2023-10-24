@@ -3,6 +3,7 @@ import { Repository } from "typeorm";
 import { AppDataSource } from "../data-source";
 import  Movie  from "../entities/movies.entity";
 import AppError from "../errors/AppError.error";
+import { PaginationParams } from "../interfaces/pagination.interface";
 
 export const createMovieService = async (data: Omit<Movie, 'id'>):Promise<Movie>=> {
     const repo: Repository<Movie> = AppDataSource.getRepository(Movie)
@@ -10,10 +11,19 @@ export const createMovieService = async (data: Omit<Movie, 'id'>):Promise<Movie>
     return newMovie;
 }
 
-export const readMovieService = async ():Promise<Movie[]>=>{
+export const readMovieService = async ({nextPage, page, perPage, prevPage} : PaginationParams):Promise<any>=>{
     const repo: Repository<Movie> = AppDataSource.getRepository(Movie)
-    const movies : Movie[] = await repo.find()
-    return movies
+    const [movies, count] = await repo.findAndCount({
+        skip: page,
+        take: perPage
+    })
+    return{
+        prevPage: page <= 1 ? null : prevPage,
+        nextPage: count - page <= perPage ? null : nextPage,
+        data : movies,
+        count
+    }
+    
 }
 
 export const updateMovieService = async (movie: Movie, data: Partial<Movie>):Promise<Movie>=>{
