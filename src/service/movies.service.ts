@@ -11,7 +11,7 @@ export const createMovieService = async (data: Omit<Movie, 'id'>):Promise<Movie>
     return newMovie;
 }
 
-export const readMovieService = async ({nextPage, page, perPage, prevPage} : PaginationParams):Promise<any>=>{
+export const readMovieService = async ({nextPage, page, perPage, prevPage, order, sort} : PaginationParams):Promise<any>=>{
     const repo: Repository<Movie> = AppDataSource.getRepository(Movie)
     const [movies, count] = await repo.findAndCount({
         skip: page,

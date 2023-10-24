@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response, query } from "express";
 import { PaginationParams } from "../interfaces/pagination.interface";
 
 export const pagination = (req: Request, res: Response , next: NextFunction) : void=> {
@@ -12,6 +12,29 @@ export const pagination = (req: Request, res: Response , next: NextFunction) : v
     const baseUrl : string = 'http://localhost:3000/movies'
     const prevPage : string = `${baseUrl}?page=${page - 1}&perPage=${perPage}`
     const nextPage : string = `${baseUrl}?page=${page + 1}&perPage=${perPage}`
+
+    const queryOrder : any = req.params.order
+    const querySort : any = req.params.sort
+
+
+    const orderOpts : Array<string> = ['asc', 'desc']
+    const sortOpts : Array<string> = ['price']
+
+    let order : string =''
+    let sort : string = ''
+
+    if(!(querySort && sortOpts.includes(querySort))){
+        sort = 'id'
+    }else{
+        sort = querySort
+    }
+
+    if(!queryOrder || (queryOrder && orderOpts.includes(queryOrder))){
+        order = 'asc'
+    }else{
+        order = queryOrder
+    }
+
 
     const pagination= {
         page: perPage * (page - 1),
