@@ -4,13 +4,13 @@ import { Repository } from "typeorm";
 import { AppDataSource } from "../data-source";
 import AppError from "../errors/AppError.error";
 
-export const verifyIdExist = async(req: Request, res: Response, next: NextFunction) => {
+export const verifyNameExist =  async(req: Request, res: Response, next: NextFunction) => {
     const movieRepo: Repository<Movie> = AppDataSource.getRepository(Movie)
+    const foundName : Movie | null = await movieRepo.findOneBy({name:(req.body.name)})
 
-    const foundMovie : Movie | null = await movieRepo.findOneBy({id: Number(req.params.id)})
-    if(!foundMovie){
-        throw new AppError('Movie not found',404)
+    if(foundName){
+        throw new AppError(`Movie already exists.`, 409 )
     }
-    res.locals = {...res.locals, foundMovie}
+    res.locals = {...res.locals, foundName}
     return next()
-}   
+}
