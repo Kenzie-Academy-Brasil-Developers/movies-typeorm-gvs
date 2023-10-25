@@ -5,7 +5,7 @@ export const pagination = (req: Request, res: Response , next: NextFunction) : v
     const queryPage : number = Number(req.query.page)
     const queryPerPage : number = Number(req.query.perPage)
 
-    const page : number = queryPage && queryPage >= 1 ? queryPage : 1
+    const page : number = queryPage && queryPage > 1 ? queryPage : 1
     const perPage : number = queryPerPage && queryPerPage <= 5 && queryPage > 0 ? queryPerPage : 5
 
 
@@ -18,7 +18,7 @@ export const pagination = (req: Request, res: Response , next: NextFunction) : v
 
 
     const orderOpts : Array<string> = ['asc', 'desc']
-    const sortOpts : Array<string> = ['price']
+    const sortOpts : Array<string> = ['price', 'duration']
 
     let order : string =''
     let sort : string = ''
@@ -29,7 +29,7 @@ export const pagination = (req: Request, res: Response , next: NextFunction) : v
         sort = querySort
     }
 
-    if(!queryOrder || (queryOrder && orderOpts.includes(queryOrder))){
+    if(!queryOrder || !(queryOrder && orderOpts.includes(queryOrder))){
         order = 'asc'
     }else{
         order = queryOrder

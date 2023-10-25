@@ -5,6 +5,9 @@ import { AppDataSource } from "../data-source";
 import AppError from "../errors/AppError.error";
 
 export const verifyNameExist =  async(req: Request, res: Response, next: NextFunction) => {
+    if(!req.body.name){
+        return next()
+    }
     const movieRepo: Repository<Movie> = AppDataSource.getRepository(Movie)
     const foundName : Movie | null = await movieRepo.findOneBy({name:(req.body.name)})
     

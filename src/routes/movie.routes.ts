@@ -8,7 +8,7 @@ import { verifyNameExist } from "../middlewares/verifyNameExist.middleware";
 
 export const movieRoutes : Router = Router();
 movieRoutes.use('/:id', verifyIdExist)
-movieRoutes.post('/', verifyNameExist, validateBody(movieCreateSchema),createMovieController)
+movieRoutes.post('/', validateBody(movieCreateSchema),verifyNameExist ,createMovieController)
 movieRoutes.get('/', pagination ,readMovieController)
-movieRoutes.patch('/:id', verifyNameExist,validateBody(movieUpdateSchema),updateMovieController)
+movieRoutes.patch('/:id',validateBody(movieUpdateSchema),verifyNameExist, updateMovieController)
 movieRoutes.delete('/:id', deleteMovieController) 
