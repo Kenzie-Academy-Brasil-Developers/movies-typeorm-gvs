@@ -36,7 +36,7 @@ export const pagination = (req: Request, res: Response , next: NextFunction) : v
     }
 
 
-    const pagination= {
+    const pagination : PaginationParams= {
         page: perPage * (page - 1),
         perPage, 
         order,
