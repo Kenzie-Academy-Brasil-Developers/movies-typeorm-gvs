@@ -36,6 +36,5 @@ export const deleteMovieService = async (movie: Movie): Promise<void> => {
     const repo : Repository<Movie> = AppDataSource.getRepository(Movie)
     
     await repo.remove(movie)
-    
-    
+
 }
