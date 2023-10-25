@@ -6,7 +6,7 @@ export const pagination = (req: Request, res: Response , next: NextFunction) : v
     const queryPerPage : number = Number(req.query.perPage)
 
     const page : number = queryPage && queryPage > 1 ? queryPage : 1
-    const perPage : number = queryPerPage && queryPerPage <= 5 && queryPage > 0 ? queryPerPage : 5
+    const perPage : number = queryPerPage && queryPerPage <= 5 && queryPerPage > 0 ? queryPerPage : 5
 
 
     const baseUrl : string = 'http://localhost:3000/movies'
@@ -29,10 +29,10 @@ export const pagination = (req: Request, res: Response , next: NextFunction) : v
         sort = querySort
     }
 
-    if(!queryOrder || !(queryOrder && orderOpts.includes(queryOrder))){
-        order = 'asc'
-    }else{
+    if(querySort && (queryOrder && orderOpts.includes(queryOrder))){
         order = queryOrder
+    }else{
+        order = 'asc'
     }
 
 
