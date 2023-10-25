@@ -6,7 +6,7 @@ export default class Movie {
     id: number
     @Column({length:50, unique : true, nullable: false})
     name: string
-    @Column({type: 'text'})
+    @Column({type: 'text', nullable: true})
     description: string
     @Column({ type: 'integer', nullable: false })
     duration: number
