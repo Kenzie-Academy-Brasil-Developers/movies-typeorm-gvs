@@ -1,18 +1,17 @@
-import { MovieRead } from "./movies.interface"
-
+import { MovieRead } from "./movies.interface";
 
 export type Pagination = {
-  prevPage: string | null
-  nextPage: string | null
-  count: number
-  data: MovieRead
-}
+  prevPage: string | null;
+  nextPage: string | null;
+  count: number;
+  data: MovieRead;
+};
 
 export type PaginationParams = {
-  page: number
-  perPage: number
-  order: string
-  sort: string
-  prevPage: string | null
-  nextPage: string | null
-}
+  page: number;
+  perPage: number;
+  order: string;
+  sort: string;
+  prevPage: string | null;
+  nextPage: string | null;
+};
